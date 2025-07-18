@@ -1,0 +1,58 @@
+export const testimonials = [
+  {
+    id: 1,
+    user: "محمود",
+    text: "خدمات عالی و رزرو آسان! بسیار راضی هستم 😊👍",
+    rating: 5,
+    avatar: "https://randomuser.me/api/portraits/men/1.jpg",
+  },
+  {
+    id: 2,
+    user: "قاسم",
+    text: "پزشکان حرفه‌ای و پشتیبانی خوب. توصیه می‌کنم! 🌟",
+    rating: 4.5,
+    avatar: "https://randomuser.me/api/portraits/women/2.jpg",
+  },
+  {
+    id: 3,
+    user: "علی",
+    text: "خدمات عالی و سریع، خیلی راضی بودم 😍",
+    rating: 5,
+    avatar: "https://randomuser.me/api/portraits/men/3.jpg",
+  },
+  {
+    id: 4,
+    user: "ناهید",
+    text: "پشتیبانی عالی و تجربه کاربری خوب ❤️",
+    rating: 4.5,
+    avatar: "https://randomuser.me/api/portraits/women/4.jpg",
+  },
+  {
+    id: 5,
+    user: "سارا",
+    text: "بهترین سرویس پزشکی که تا به حال استفاده کردم 🏥✨",
+    rating: 5,
+    avatar: "https://randomuser.me/api/portraits/women/5.jpg",
+  },
+  {
+    id: 6,
+    user: "رضا",
+    text: "دسترسی آسان به پزشکان متخصص، عالی بود 👨‍⚕️",
+    rating: 4.5,
+    avatar: "https://randomuser.me/api/portraits/men/6.jpg",
+  },
+  {
+    id: 7,
+    user: "مریم",
+    text: "رزرو نوبت بسیار ساده و سریع انجام شد 🎯",
+    rating: 5,
+    avatar: "https://randomuser.me/api/portraits/women/7.jpg",
+  },
+  {
+    id: 8,
+    user: "حسین",
+    text: "کیفیت خدمات فوق العاده است 💯",
+    rating: 4.5,
+    avatar: "https://randomuser.me/api/portraits/men/8.jpg",
+  },
+];
