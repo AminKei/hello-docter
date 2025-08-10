@@ -1,27 +1,11 @@
-import React, { useState, useEffect } from "react";
-import {
-  Card,
-  Select,
-  Button,
-  Checkbox,
-  Row,
-  Col,
-  Typography,
-  Drawer,
-  Switch,
-} from "antd";
+import React, { FC, useState } from "react";
+import { Card, Select, Button, Typography, Drawer, Switch } from "antd";
 import { CloseOutlined } from "@ant-design/icons";
 
 const { Title, Text } = Typography;
 const { Option } = Select;
 
-interface FilterComponentProps {
-  onFilterChange: (filters: FilterState) => void;
-  isDrawerVisible: boolean;
-  setIsDrawerVisible: (visible: boolean) => void;
-}
-
-interface FilterState {
+export interface FilterState {
   specialty: string;
   city: string;
   gender: string;
@@ -29,7 +13,17 @@ interface FilterState {
   online: boolean;
 }
 
-const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }: FilterComponentProps) => {
+interface FilterComponentProps {
+  onFilterChange: (filters: FilterState) => void;
+  isDrawerVisible: boolean;
+  setIsDrawerVisible: (visible: boolean) => void;
+}
+
+const FilterComponent: FC<FilterComponentProps> = ({
+  onFilterChange,
+  isDrawerVisible,
+  setIsDrawerVisible,
+}) => {
   const [filters, setFilters] = useState<FilterState>({
     specialty: "",
     city: "",
@@ -38,12 +32,10 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
     online: false,
   });
 
-  useEffect(() => {
-    onFilterChange(filters);
-  }, [filters, onFilterChange]);
-
   const handleChange = (key: keyof FilterState, value: string | boolean) => {
-    setFilters((prev) => ({ ...prev, [key]: value }));
+    const newFilters = { ...filters, [key]: value };
+    setFilters(newFilters);
+    onFilterChange(newFilters);
   };
 
   const handleReset = () => {
@@ -55,6 +47,7 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
       online: false,
     };
     setFilters(resetFilters);
+    onFilterChange(resetFilters);
   };
 
   const onCloseDrawer = () => {
@@ -62,16 +55,20 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
   };
 
   return (
-    <div style={{ textAlign: "right" }}>
+    <div style={{ textAlign: "right" , position:"sticky", top:"100px"}}>
       <Drawer
         title="فیلترها"
         placement="right"
         closable={true}
         onClose={onCloseDrawer}
-        visible={isDrawerVisible}
+        open={isDrawerVisible}
         width={300}
         extra={
-          <Button type="text" icon={<CloseOutlined />} onClick={onCloseDrawer} />
+          <Button
+            type="text"
+            icon={<CloseOutlined />}
+            onClick={onCloseDrawer}
+          />
         }
       >
         <div style={{ padding: "10px 0" }}>
@@ -132,7 +129,14 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
             <Option value="10+">10+ سال</Option>
           </Select>
         </div>
-        <div style={{ padding: "10px 0", display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <div
+          style={{
+            padding: "10px 0",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "space-between",
+          }}
+        >
           <Text strong>فقط در دسترس</Text>
           <Switch
             checked={filters.online}
@@ -147,24 +151,15 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
           پاک کردن فیلترها
         </Button>
       </Drawer>
-
-      {/* Card for desktop view */}
-      <div
-        style={{
-          display: window.innerWidth > 768 ? "block" : "none",
-        }}
-      >
+      <div style={{ display: window.innerWidth > 768 ? "block" : "none" }}>
         <Card
           title={
             <Title level={4} style={{ margin: 0 }}>
               فیلترها
             </Title>
           }
-          extra={
-            <Button type="text" icon={<CloseOutlined />} onClick={handleReset} />
-          }
           style={{
-            width: "30%",
+            width: "100%",
             minWidth: "300px",
             borderRadius: "10px",
             margin: "0 10px",
@@ -230,12 +225,19 @@ const FilterComponent = ({ onFilterChange, isDrawerVisible, setIsDrawerVisible }
               <Option value="10+">10+ سال</Option>
             </Select>
           </div>
-          <div style={{ padding: "10px 0", display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+          <div
+            style={{
+              padding: "10px 0",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <Text strong>فقط در دسترس</Text>
             <Switch
               checked={filters.online}
               onChange={(checked) => handleChange("online", checked)}
             />
-            <Text strong>فقط در دسترس</Text>
           </div>
           <Button
             type="primary"

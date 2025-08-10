@@ -1,10 +1,10 @@
-import React from "react";
+import React, { FC } from "react";
 import { Row, Col, Input, Select, Button } from "antd";
 import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
 
 const { Option } = Select;
 
-interface SearchAndSortProps {
+export interface SearchAndSortProps {
   filters: { name: string };
   sort: string;
   handleSearchChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
@@ -12,7 +12,7 @@ interface SearchAndSortProps {
   showDrawer: () => void;
 }
 
-const SearchAndSort: React.FC<SearchAndSortProps> = ({
+const SearchAndSort: FC<SearchAndSortProps> = ({
   filters,
   sort,
   handleSearchChange,
@@ -20,10 +20,13 @@ const SearchAndSort: React.FC<SearchAndSortProps> = ({
   showDrawer,
 }) => {
   return (
-    <Row gutter={[16, 16]} align="stretch" justify="center" style={{direction:'rtl'}}>
-      
-     
-      <Col xs={24} sm={24} md={14} lg={14}>
+    <Row
+      gutter={[20, 20]}
+      align="stretch"
+      justify="center"
+      style={{ direction: "rtl" }}
+    >
+      <Col xs={24} sm={24} md={18} lg={18}>
         <Input
           placeholder="جستجوی پزشک..."
           prefix={<SearchOutlined />}
@@ -43,25 +46,18 @@ const SearchAndSort: React.FC<SearchAndSortProps> = ({
           type="primary"
           icon={<FilterOutlined />}
           onClick={showDrawer}
-          style={{
-            width: "100%",
-            borderRadius: "4px",
-            height: "40px",
-          }}
+          style={{ width: "100%", borderRadius: "4px", height: "40px" }}
         >
           فیلترها
         </Button>
       </Col>
-      <Col xs={12} sm={12} md={10} lg={10}>
+      <Col xs={12} sm={12} md={6} lg={6}>
         <Select
           placeholder="مرتب‌سازی"
           value={sort}
           size="large"
           onChange={handleSortChange}
-          style={{
-            width: "100%",
-            borderRadius: "4px",
-          }}
+          style={{ width: "100%", borderRadius: "4px" }}
         >
           <Option value="default">پیش‌فرض</Option>
           <Option value="rating-high">امتیاز (بالا به پایین)</Option>
@@ -70,7 +66,6 @@ const SearchAndSort: React.FC<SearchAndSortProps> = ({
           <Option value="experience-low">تجربه (کم به زیاد)</Option>
         </Select>
       </Col>
-   
     </Row>
   );
 };

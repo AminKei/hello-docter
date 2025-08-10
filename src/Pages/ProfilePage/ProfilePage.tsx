@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Layout,
@@ -42,7 +42,7 @@ import {
   IdcardOutlined,
   HeartOutlined,
 } from "@ant-design/icons";
-import "antd/dist/reset.css";
+import "./ProfilePage.css"; // Import the CSS file
 
 const { Title, Text } = Typography;
 const { TabPane } = Tabs;
@@ -93,8 +93,19 @@ const ProfilePage: React.FC = () => {
     avatar: null,
   });
   const [currentPage, setCurrentPage] = useState(1);
+  const [userModalVisible, setUserModalVisible] = useState(false);
   const [editModalVisible, setEditModalVisible] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
   const [form] = Form.useForm();
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsMobile(window.innerWidth <= 576); // Mobile breakpoint
+    };
+    handleResize();
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleUpload = (file: any) => {
     setUser({ ...user, avatar: URL.createObjectURL(file) as any });
@@ -108,100 +119,113 @@ const ProfilePage: React.FC = () => {
     message.success("پروفایل با موفقیت به‌روزرسانی شد");
   };
 
+  const showUserModal = () => {
+    setUserModalVisible(true);
+  };
+
   return (
-    <Layout
-      style={{
-        minHeight: "90vh",
-        direction: "rtl",
-        backgroundColor: "white",
-        width: "1170px",
-      }}
-    >
+    <Layout className="profile-container">
       <Row gutter={[24, 24]}>
-        <Col xs={24} lg={8}>
-          <Card style={{ textAlign: "center", borderRadius: "12px" }}>
-            <Avatar
-              size={100}
-              src={user.avatar}
-              icon={!user.avatar && <UserOutlined />}
-              style={{ marginBottom: 24, border: "4px solid #1890ff" }}
-            />
-            <Upload
-              beforeUpload={handleUpload}
-              showUploadList={false}
-              accept="image/*"
-            >
-              <Button icon={<UploadOutlined />} style={{ marginBottom: 24 }}>
-                آپلود عکس
+        {!isMobile && (
+          <Col xs={24} lg={8}>
+            <Card className="profile-card">
+              <Avatar
+                size={100}
+                src={user.avatar}
+                icon={!user.avatar && <UserOutlined />}
+                className="profile-avatar"
+              />
+              <Upload
+                beforeUpload={handleUpload}
+                showUploadList={false}
+                accept="image/*"
+              >
+                <Button icon={<UploadOutlined />} style={{ marginBottom: 24 }}>
+                  آپلود عکس
+                </Button>
+              </Upload>
+              <Title level={3} style={{ marginBottom: 16 }}>
+                {user.name}
+              </Title>
+              <Divider />
+              <Space
+                direction="vertical"
+                size="large"
+                className="profile-space"
+              >
+                <div>
+                  <Text type="secondary">اطلاعات تماس</Text>
+                  <Space
+                    direction="vertical"
+                    style={{ width: "100%", marginTop: 8 }}
+                  >
+                    <Text>
+                      <MailOutlined /> {user.email}
+                    </Text>
+                    <Text>
+                      <PhoneOutlined /> {user.phone}
+                    </Text>
+                    <Text>
+                      <EnvironmentOutlined /> {user.address}
+                    </Text>
+                  </Space>
+                </div>
+                <div>
+                  <Text type="secondary">اطلاعات شخصی</Text>
+                  <Space
+                    direction="vertical"
+                    style={{ width: "100%", marginTop: 8 }}
+                  >
+                    <Text>
+                      <IdcardOutlined /> کد ملی: {user.nationalId}
+                    </Text>
+                    <Text>
+                      <CalendarOutlined /> تاریخ تولد: {user.birthDate}
+                    </Text>
+                    <Text>
+                      <HeartOutlined /> گروه خونی: {user.bloodType}
+                    </Text>
+                  </Space>
+                </div>
+                <div>
+                  <Text type="secondary">اطلاعات بیمه</Text>
+                  <Space
+                    direction="vertical"
+                    style={{ width: "100%", marginTop: 8 }}
+                  >
+                    <Text>
+                      <CheckCircleOutlined /> نوع بیمه: {user.insurance}
+                    </Text>
+                    <Text>
+                      <PhoneOutlined /> شماره اضطراری: {user.emergencyContact}
+                    </Text>
+                  </Space>
+                </div>
+              </Space>
+              <Divider />
+              <Button
+                type="primary"
+                icon={<SettingOutlined />}
+                block
+                onClick={() => setEditModalVisible(true)}
+              >
+                ویرایش پروفایل
               </Button>
-            </Upload>
-            <Title level={3} style={{ marginBottom: 16 }}>
-              {user.name}
-            </Title>
-            <Divider />
-            <Space direction="vertical" size="large" style={{ width: "100%" }}>
-              <div>
-                <Text type="secondary">اطلاعات تماس</Text>
-                <Space
-                  direction="vertical"
-                  style={{ width: "100%", marginTop: 8 }}
-                >
-                  <Text>
-                    <MailOutlined /> {user.email}
-                  </Text>
-                  <Text>
-                    <PhoneOutlined /> {user.phone}
-                  </Text>
-                  <Text>
-                    <EnvironmentOutlined /> {user.address}
-                  </Text>
-                </Space>
-              </div>
-              <div>
-                <Text type="secondary">اطلاعات شخصی</Text>
-                <Space
-                  direction="vertical"
-                  style={{ width: "100%", marginTop: 8 }}
-                >
-                  <Text>
-                    <IdcardOutlined /> کد ملی: {user.nationalId}
-                  </Text>
-                  <Text>
-                    <CalendarOutlined /> تاریخ تولد: {user.birthDate}
-                  </Text>
-                  <Text>
-                    <HeartOutlined /> گروه خونی: {user.bloodType}
-                  </Text>
-                </Space>
-              </div>
-              <div>
-                <Text type="secondary">اطلاعات بیمه</Text>
-                <Space
-                  direction="vertical"
-                  style={{ width: "100%", marginTop: 8 }}
-                >
-                  <Text>
-                    <CheckCircleOutlined /> نوع بیمه: {user.insurance}
-                  </Text>
-                  <Text>
-                    <PhoneOutlined /> شماره اضطراری: {user.emergencyContact}
-                  </Text>
-                </Space>
-              </div>
-            </Space>
-            <Divider />
+            </Card>
+          </Col>
+        )}
+        <Col xs={24} lg={isMobile ? 24 : 16}>
+          {isMobile && (
             <Button
               type="primary"
-              icon={<SettingOutlined />}
-              block
-              onClick={() => setEditModalVisible(true)}
+              icon={<UserOutlined />}
+              onClick={showUserModal}
+              style={{ marginBottom: 16, width: "200px" }}
             >
-              ویرایش پروفایل
+              اطلاعات کاربر
             </Button>
-          </Card>
-        </Col>
-        <Col xs={24} lg={16}>
-          <Card style={{ borderRadius: "12px", width: "100%" }}>
+          )}
+          <Card  style={{ width:"100%"}}>
             <Tabs
               defaultActiveKey="1"
               type="card"
@@ -221,7 +245,7 @@ const ProfilePage: React.FC = () => {
                   dataSource={sampleAppointments}
                   pagination={{
                     current: currentPage,
-                    pageSize: 2,
+                    // pageSize: 2,
                     onChange: (page) => setCurrentPage(page),
                   }}
                   renderItem={(item) => (
@@ -368,11 +392,95 @@ const ProfilePage: React.FC = () => {
       </Row>
 
       <Modal
+        title="اطلاعات کاربر"
+        open={userModalVisible}
+        onCancel={() => setUserModalVisible(false)}
+        footer={null}
+        style={{ direction: "rtl" }}
+        width={400}
+      >
+        <Card>
+          <Avatar
+            size={100}
+            src={user.avatar}
+            icon={!user.avatar && <UserOutlined />}
+            className="profile-avatar"
+            style={{ margin: "0 auto 24px" }}
+          />
+          <Title level={3} style={{ textAlign: "center", marginBottom: 16 }}>
+            {user.name}
+          </Title>
+          <Space direction="vertical" size="large" className="profile-space">
+            <div>
+              <Text type="secondary">اطلاعات تماس</Text>
+              <Space
+                direction="vertical"
+                style={{ width: "100%", marginTop: 8 }}
+              >
+                <Text>
+                  <MailOutlined /> {user.email}
+                </Text>
+                <Text>
+                  <PhoneOutlined /> {user.phone}
+                </Text>
+                <Text>
+                  <EnvironmentOutlined /> {user.address}
+                </Text>
+              </Space>
+            </div>
+            <div>
+              <Text type="secondary">اطلاعات شخصی</Text>
+              <Space
+                direction="vertical"
+                style={{ width: "100%", marginTop: 8 }}
+              >
+                <Text>
+                  <IdcardOutlined /> کد ملی: {user.nationalId}
+                </Text>
+                <Text>
+                  <CalendarOutlined /> تاریخ تولد: {user.birthDate}
+                </Text>
+                <Text>
+                  <HeartOutlined /> گروه خونی: {user.bloodType}
+                </Text>
+              </Space>
+            </div>
+            <div>
+              <Text type="secondary">اطلاعات بیمه</Text>
+              <Space
+                direction="vertical"
+                style={{ width: "100%", marginTop: 8 }}
+              >
+                <Text>
+                  <CheckCircleOutlined /> نوع بیمه: {user.insurance}
+                </Text>
+                <Text>
+                  <PhoneOutlined /> شماره اضطراری: {user.emergencyContact}
+                </Text>
+              </Space>
+            </div>
+          </Space>
+          <Divider />
+          <Button
+            type="primary"
+            icon={<SettingOutlined />}
+            block
+            onClick={() => {
+              setUserModalVisible(false);
+              setEditModalVisible(true);
+            }}
+          >
+            ویرایش پروفایل
+          </Button>
+        </Card>
+      </Modal>
+
+      <Modal
         title="ویرایش پروفایل"
         open={editModalVisible}
         onCancel={() => setEditModalVisible(false)}
         footer={null}
-        style={{direction:"rtl"}}
+        style={{ direction: "rtl" }}
       >
         <Form
           form={form}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Row, Col, Pagination, Typography, Breadcrumb } from "antd";
 import { doctors } from "../../DataApi/DataApi";
 import FilterComponent from "../../Components/Layout/AllDoctersLayout/FilterComponent";
@@ -9,13 +9,14 @@ const { Title } = Typography;
 
 interface Doctor {
   id: number;
-  name: string;
-  specialty: string;
-  image: string;
-  rating: number;
-  experience: number;
-  available: boolean;
-  gender: string;
+  name?: string; // اختیاری کردن فیلدها برای جلوگیری از خطا
+  specialty?: string;
+  image?: string;
+  rating?: number;
+  experience?: number;
+  available?: boolean;
+  gender?: string;
+  city?: string;
 }
 
 interface FilterState {
@@ -41,8 +42,15 @@ const AllDoctersPage = () => {
   const [isDrawerVisible, setIsDrawerVisible] = useState(false);
   const doctorsPerPage = 6;
 
-  const handleFilterChange = (newFilter: FilterState) => {
-    setFilters({ ...filters, ...newFilter });
+  // بررسی اولیه داده‌ها
+  useEffect(() => {
+    if (!doctors || !Array.isArray(doctors)) {
+      console.error("داده‌های doctors به درستی بارگذاری نشده است.");
+    }
+  }, []);
+
+  const handleFilterChange = (newFilters: FilterState) => {
+    setFilters(newFilters);
     setCurrentPage(1);
   };
 
@@ -64,37 +72,41 @@ const AllDoctersPage = () => {
     setIsDrawerVisible(false);
   };
 
-  let filteredDoctors = (doctors as Doctor[]).filter((doctor) => {
+  let filteredDoctors = (doctors || []).filter((doctor) => {
+    // بررسی وجود doctor و ویژگی‌های آن
+    const name = doctor?.name || "";
+    const specialty = doctor?.specialty || "";
+    const city = doctor?.city || "";
+    const gender = doctor?.gender || "";
+    const experience = doctor?.experience || 0;
+    const available = doctor?.available || false;
+
     return (
-      doctor.name.toLowerCase().includes(filters.name.toLowerCase()) &&
-      (filters.specialty === "" || doctor.specialty === filters.specialty) &&
-      (filters.gender === "" || doctor.gender === filters.gender) &&
+      name.toLowerCase().includes(filters.name.toLowerCase()) &&
+      (filters.specialty === "" || specialty === filters.specialty) &&
+      (filters.city === "" || city === filters.city) &&
+      (filters.gender === "" || gender === filters.gender) &&
       (filters.experience === "" ||
-        (filters.experience === "0-5" && doctor.experience <= 5) ||
-        (filters.experience === "5-10" &&
-          doctor.experience > 5 &&
-          doctor.experience <= 10) ||
-        (filters.experience === "10+" && doctor.experience > 10)) &&
-      (!filters.online || doctor.available)
+        (filters.experience === "0-5" && experience <= 5) ||
+        (filters.experience === "5-10" && experience > 5 && experience <= 10) ||
+        (filters.experience === "10+" && experience > 10)) &&
+      (!filters.online || available)
     );
   });
 
   if (sort === "rating-high") {
-    filteredDoctors.sort((a, b) => b.rating - a.rating);
+    filteredDoctors.sort((a, b) => (b.rating || 0) - (a.rating || 0));
   } else if (sort === "rating-low") {
-    filteredDoctors.sort((a, b) => a.rating - b.rating);
+    filteredDoctors.sort((a, b) => (a.rating || 0) - (b.rating || 0));
   } else if (sort === "experience-high") {
-    filteredDoctors.sort((a, b) => b.experience - a.experience);
+    filteredDoctors.sort((a, b) => (b.experience || 0) - (a.experience || 0));
   } else if (sort === "experience-low") {
-    filteredDoctors.sort((a, b) => a.experience - b.experience);
+    filteredDoctors.sort((a, b) => (a.experience || 0) - (b.experience || 0));
   }
 
   const indexOfLastDoctor = currentPage * doctorsPerPage;
   const indexOfFirstDoctor = indexOfLastDoctor - doctorsPerPage;
-  const currentDoctors = filteredDoctors.slice(
-    indexOfFirstDoctor,
-    indexOfLastDoctor
-  );
+  const currentDoctors = filteredDoctors.slice(indexOfFirstDoctor, indexOfLastDoctor);
   const totalPages = Math.ceil(filteredDoctors.length / doctorsPerPage);
 
   return (
@@ -141,12 +153,7 @@ const AllDoctersPage = () => {
                 </Col>
               ))}
             </Row>
-            <div
-              style={{
-                textAlign: "center",
-                marginTop: "30px",
-              }}
-            >
+            <div style={{ textAlign: "center", marginTop: "30px" }}>
               <Pagination
                 current={currentPage}
                 total={filteredDoctors.length}
@@ -157,14 +164,12 @@ const AllDoctersPage = () => {
               />
             </div>
           </Col>
-          <Col xs={0} md={8} lg={6} style={{ marginTop: "20px" }}>
-            <div style={{ position: "sticky", top: "20px" }}>
-              <FilterComponent
-                onFilterChange={() => handleFilterChange}
-                isDrawerVisible={isDrawerVisible}
-                setIsDrawerVisible={setIsDrawerVisible}
-              />
-            </div>
+          <Col xs={0} md={8} lg={6} style={{ position: "sticky", top: "20px" }}>
+            <FilterComponent
+              onFilterChange={handleFilterChange}
+              isDrawerVisible={isDrawerVisible}
+              setIsDrawerVisible={setIsDrawerVisible}
+            />
           </Col>
         </Row>
       </Row>

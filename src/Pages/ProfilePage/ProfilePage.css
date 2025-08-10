@@ -1,0 +1,112 @@
+/* Default styles (Desktop first approach) */
+.profile-container {
+    min-height: 90vh;
+    direction: rtl;
+    background-color: white;
+    width: 1170px;
+    margin: 0 auto;
+    /* padding: 24px; */
+  }
+  
+  .profile-card {
+    text-align: center;
+    border-radius: 12px;
+    margin-bottom: 24px;
+  }
+  
+  .profile-tabs-card {
+    border-radius: 12px;
+    width: 100%;
+  }
+  
+  .profile-avatar {
+    margin-bottom: 24px;
+    border: 4px solid #1890ff;
+  }
+  
+  .profile-space {
+    width: 100%;
+  }
+  
+  .profile-info-text {
+    margin-top: 8px;
+  }
+  
+  /* Responsive Styles */
+  @media (max-width: 1200px) {
+    .profile-container {
+      width: 100%;
+      padding: 16px;
+    }
+  }
+  
+  @media (max-width: 992px) {
+    .profile-container {
+      width: 100%;
+      padding: 12px;
+    }
+  
+    .ant-row {
+      flex-direction: column;
+    }
+  
+    .ant-col-lg-8 {
+      display: none; /* Hide user info card on tablet and mobile */
+    }
+  
+    .ant-col-lg-16 {
+      width: 100% !important;
+      max-width: 100% !important;
+    }
+  
+    .profile-card,
+    .profile-tabs-card {
+      margin-bottom: 16px;
+    }
+  }
+  
+  @media (max-width: 576px) {
+    .profile-container {
+      padding: 8px;
+    }
+  
+    .profile-avatar {
+      height: 80px;
+    }
+  
+    .ant-btn {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+  
+    .ant-list-item {
+      flex-direction: column;
+      align-items: flex-start;
+    }
+  
+    .ant-list-item-actions {
+      margin-top: 8px;
+      width: 100%;
+    }
+  
+    .ant-list-item-action {
+      width: 48%;
+      margin-left: 4%;
+    }
+  
+    .ant-list-item-action:first-child {
+      margin-left: 0;
+    }
+  
+    .ant-timeline-item-content {
+      margin-right: 0;
+    }
+  
+    .ant-form-item {
+      margin-bottom: 12px;
+    }
+  
+    .ant-modal {
+      width: 90% !important;
+    }
+  }

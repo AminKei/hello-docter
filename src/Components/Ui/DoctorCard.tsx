@@ -23,7 +23,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
         transition: "transform 0.3s, box-shadow 0.3s",
         background: "#fff",
         width: "100%",
-        maxWidth: "300px",
+        minWidth: "250px",
         margin: "0 auto",
       }}
       bodyStyle={{ padding: "16px" }}
@@ -31,11 +31,7 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
       <Badge.Ribbon
         text={doctor.available ? "در دسترس" : "غیرفعال"}
         color={doctor.available ? "green" : "red"}
-        style={{
-          fontSize: "12px",
-          fontWeight: "bold",
-          padding: "4px 8px",
-        }}
+        style={{ fontSize: "12px", fontWeight: "bold", padding: "4px 8px" }}
       >
         <div
           style={{
@@ -95,42 +91,20 @@ const DoctorCard = ({ doctor }: { doctor: Doctor }) => {
           title="سال تجربه"
           value={doctor.experience}
           prefix={<ClockCircleOutlined style={{ color: "#1890ff" }} />}
-          valueStyle={{
-            color: "#1890ff",
-            fontSize: "clamp(14px, 3vw, 18px)",
-            fontWeight: "bold",
-          }}
+          valueStyle={{ color: "#1890ff", fontSize: "clamp(14px, 3vw, 18px)", fontWeight: "bold" }}
         />
       </div>
-      <Space
-        style={{
-          display: "flex",
-          justifyContent: "center",
-          alignItems: "center",
-          width:"100%"
-        }}
-      >
+      <Space style={{ display: "flex", justifyContent: "center", alignItems: "center", width: "100%" }}>
         <Button
           type="primary"
-          style={{
-            width: "180px",
-            height: "40px",
-            fontWeight: "600",
-            border: "none",
-            transition: "all 0.3s",
-          }}
+          style={{ width: "180px", height: "40px", fontWeight: "600", border: "none", transition: "all 0.3s" }}
           className="hover:scale-105"
           onClick={() => (window.location.href = "/booking")}
         >
           رزرو نوبت
         </Button>
         <Button
-          style={{
-            width: "50px",
-            height: "40px",
-            fontWeight: "600",
-            transition: "all 0.3s",
-          }}
+          style={{ width: "50px", height: "40px", fontWeight: "600", transition: "all 0.3s" }}
         >
           <ClockCircleOutlined />
         </Button>

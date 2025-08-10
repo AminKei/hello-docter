@@ -11,7 +11,8 @@ const { Search } = Input;
 
 const slides = [
   {
-    image: "https://img9.irna.ir/d/r2/2020/04/07/4/157062107.jpg",
+    image:
+      "https://dr-zarghami.com/wp-content/uploads/2024/08/MVI_2391-ezgif.com-video-to-gif-converter.gif",
     title: "سامانه نوبت‌دهی پزشکی",
     subtitle: "مشاوره آنلاین و حضوری با پزشکان متخصص",
     buttonText: "دریافت نوبت",
@@ -19,7 +20,8 @@ const slides = [
     buttonLink: "/booking",
   },
   {
-    image: "https://media.khabaronline.ir/d/2019/11/25/0/5301116.jpeg",
+    image:
+      "https://rfhospital.ir/wp-content/uploads/2022/08/%D8%A8%D9%87%D8%AF%D8%A7%D8%B4%D8%AA-%D8%AF%D8%B3%D8%AA11.gif",
     title: "خدمات پزشکی آنلاین",
     subtitle: "دسترسی به بهترین پزشکان در تمام تخصص‌ها",
     buttonText: "مشاهده خدمات",
@@ -48,7 +50,7 @@ const HeroCarousel = () => {
       style={{
         position: "relative",
         width: "100%",
-        height:"450px",
+        height: "450px",
         overflow: "hidden",
         minWidth: "300px",
         // height: "clamp(3400px, 100%, 600px)", // Fixed 300px height for mobile, up to 600px for larger screens
@@ -151,9 +153,8 @@ const HeroCarousel = () => {
           minWidth: "300px",
           padding: "30px 30px",
           zIndex: 0,
-          backgroundColor:"white",
-          borderRadius:10
-          
+          backgroundColor: "white",
+          borderRadius: 10,
         }}
       >
         <Search
