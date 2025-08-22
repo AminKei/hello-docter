@@ -10,6 +10,7 @@ const MenuItems = () => {
         textAlign: "right",
         fontSize: "14px",
         fontWeight: 500,
+        backgroundColor:"white"
       }}
     >
       <Menu.Item key="home">

@@ -36,6 +36,16 @@ const RegisterPage: React.FC = () => {
   const onFinish = (values: any) => {
     setLoading(true);
     setTimeout(() => {
+      // ذخیره اطلاعات در localStorage
+      const userData = {
+        firstName: values.firstName,
+        lastName: values.lastName,
+        email: values.email,
+        phone: values.phone,
+        password: values.password,
+      };
+      localStorage.setItem("user", JSON.stringify(userData));
+
       notification.success({
         message: "ثبت نام موفق",
         description: "حساب کاربری شما با موفقیت ایجاد شد!",
@@ -65,10 +75,10 @@ const RegisterPage: React.FC = () => {
         alignItems: "center",
         justifyContent: "center",
         background: "none",
-        direction:"rtl"
+        direction: "rtl",
       }}
     >
-      <Card style={{ width: "100%" }}>
+      <Card style={{ width: "100%", maxWidth: "600px" }}>
         <div>
           <Breadcrumb style={{ marginBottom: "24px", textAlign: "right" }}>
             <Breadcrumb.Item>
@@ -185,7 +195,7 @@ const RegisterPage: React.FC = () => {
                     />
                   </Form.Item>
                   <Progress
-                  style={{direction:"ltr"}}
+                    style={{ direction: "ltr" }}
                     percent={
                       form.getFieldValue("password")?.length > 5 ? 100 : 50
                     }

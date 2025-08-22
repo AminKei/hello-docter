@@ -31,13 +31,26 @@ const LoginPage: React.FC = () => {
 
   const onFinish = (values: any) => {
     setLoading(true);
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+
     setTimeout(() => {
-      message.success({
-        content: "ورود با موفقیت انجام شد!",
-        style: { marginTop: "20px" },
-      });
-      setLoading(false);
-      window.location.href = "/profile";
+      if (
+        storedUser.email === values.email &&
+        storedUser.password === values.password
+      ) {
+        message.success({
+          content: "ورود با موفقیت انجام شد!",
+          style: { marginTop: "20px" },
+        });
+        setLoading(false);
+        window.location.href = "/profile";
+      } else {
+        message.error({
+          content: "ایمیل یا رمز عبور اشتباه است!",
+          style: { marginTop: "20px" },
+        });
+        setLoading(false);
+      }
     }, 1000);
   };
 
@@ -62,7 +75,7 @@ const LoginPage: React.FC = () => {
   return (
     <Layout
       style={{
-        direction:'rtl',
+        direction: "rtl",
         minHeight: "90vh",
         background: "none",
         display: "flex",

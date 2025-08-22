@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import {
   Menu,
@@ -21,9 +21,15 @@ import { Header } from "antd/es/layout/layout";
 const { Title } = Typography;
 const { useBreakpoint } = Grid;
 
-const HeaderComponent = () => {
+const HeaderComponent: React.FC = () => {
   const [mobileMenuVisible, setMobileMenuVisible] = useState(false);
   const screens = useBreakpoint();
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
+  useEffect(() => {
+    const storedUser = JSON.parse(localStorage.getItem("user") || "{}");
+    setIsLoggedIn(!!storedUser.email);
+  }, []);
 
   const toggleMobileMenu = () => {
     setMobileMenuVisible(!mobileMenuVisible);
@@ -53,8 +59,8 @@ const HeaderComponent = () => {
           flexWrap: "wrap",
         }}
       >
-        <Space style={{gap:"0px"}}>
-          {screens.xs ? (
+        <Space style={{ gap: "0px" }}>
+          {!isLoggedIn && (screens.xs ? (
             <Button
               type="primary"
               size="small"
@@ -81,8 +87,8 @@ const HeaderComponent = () => {
             >
               <Link to="/login">ورود</Link>
             </Button>
-          )}
-          {screens.xs ? (
+          ))}
+          {!isLoggedIn && (screens.xs ? (
             <Button
               size="small"
               style={{
@@ -105,7 +111,7 @@ const HeaderComponent = () => {
             >
               <Link to="/register">ثبت‌نام</Link>
             </Button>
-          )}
+          ))}
           {screens.xs ? (
             <Button
               type="primary"
@@ -159,23 +165,25 @@ const HeaderComponent = () => {
               />
             </Badge>
           </Tooltip>
-          <Link to="/profile">
-            <Button
-              icon={<UserOutlined />}
-              shape="circle"
-              size={screens.xs ? "small" : "middle"}
-              style={{
-                backgroundColor: "#fff",
-                transition: "background-color 0.3s",
-              }}
-              onMouseEnter={(e) =>
-                (e.currentTarget.style.backgroundColor = "#e6f7ff")
-              }
-              onMouseLeave={(e) =>
-                (e.currentTarget.style.backgroundColor = "#fff")
-              }
-            />
-          </Link>
+          {isLoggedIn && (
+            <Link to="/profile">
+              <Button
+                icon={<UserOutlined />}
+                shape="circle"
+                size={screens.xs ? "small" : "middle"}
+                style={{
+                  backgroundColor: "#fff",
+                  transition: "background-color 0.3s",
+                }}
+                onMouseEnter={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#e6f7ff")
+                }
+                onMouseLeave={(e) =>
+                  (e.currentTarget.style.backgroundColor = "#fff")
+                }
+              />
+            </Link>
+          )}
         </Space>
 
         {screens.md && (
@@ -186,7 +194,7 @@ const HeaderComponent = () => {
               flex: 1,
               justifyContent: "center",
               border: "none",
-              background: "transparent",
+              backgroundColor: "white",
               fontSize: screens.lg ? "14px" : "12px",
               fontWeight: 500,
             }}
@@ -225,14 +233,15 @@ const HeaderComponent = () => {
             style={{
               margin: 0,
               color: "#1890ff",
+              backgroundColor: "white",
               fontWeight: 700,
               letterSpacing: "-0.5px",
               marginRight: screens.xs ? "5px" : "10px",
+              padding: "15px",
             }}
-            
           >
-            <Link to={"/"}>
-            سلام دکتر
+            <Link to={"/"} style={{ backgroundColor: "white" }}>
+              سلام دکتر
             </Link>
           </Title>
           {!screens.md && (

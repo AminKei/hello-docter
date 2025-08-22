@@ -35,7 +35,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
   const handleChange = (key: keyof FilterState, value: string | boolean) => {
     const newFilters = { ...filters, [key]: value };
     setFilters(newFilters);
-    onFilterChange(newFilters);
+    onFilterChange(newFilters); // فراخوانی با آرگومان جدید
   };
 
   const handleReset = () => {
@@ -47,7 +47,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
       online: false,
     };
     setFilters(resetFilters);
-    onFilterChange(resetFilters);
+    onFilterChange(resetFilters); // فراخوانی با فیلترهای ریست‌شده
   };
 
   const onCloseDrawer = () => {
@@ -55,7 +55,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
   };
 
   return (
-    <div style={{ textAlign: "right" , position:"sticky", top:"100px"}}>
+    <div style={{ textAlign: "right", position: "sticky", top: "100px" }}>
       <Drawer
         title="فیلترها"
         placement="right"
@@ -63,13 +63,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
         onClose={onCloseDrawer}
         open={isDrawerVisible}
         width={300}
-        extra={
-          <Button
-            type="text"
-            icon={<CloseOutlined />}
-            onClick={onCloseDrawer}
-          />
-        }
+        extra={<Button type="text" icon={<CloseOutlined />} onClick={onCloseDrawer} />}
       >
         <div style={{ padding: "10px 0" }}>
           <Text strong>تخصص</Text>
@@ -153,11 +147,7 @@ const FilterComponent: FC<FilterComponentProps> = ({
       </Drawer>
       <div style={{ display: window.innerWidth > 768 ? "block" : "none" }}>
         <Card
-          title={
-            <Title level={4} style={{ margin: 0 }}>
-              فیلترها
-            </Title>
-          }
+          title={<Title level={4} style={{ margin: 0 }}>فیلترها</Title>}
           style={{
             width: "100%",
             minWidth: "300px",
