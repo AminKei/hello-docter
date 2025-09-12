@@ -60,58 +60,60 @@ const HeaderComponent: React.FC = () => {
         }}
       >
         <Space style={{ gap: "0px" }}>
-          {!isLoggedIn && (screens.xs ? (
-            <Button
-              type="primary"
-              size="small"
-              style={{
-                borderColor: "#1890ff",
-                borderRadius: "8px",
-                transition: "all 0.3s",
-                marginRight: "5px",
-                fontSize: "12px",
-              }}
-            >
-              <Link to="/login">ورود</Link>
-            </Button>
-          ) : (
-            <Button
-              type="primary"
-              size="middle"
-              style={{
-                borderColor: "#1890ff",
-                borderRadius: "8px",
-                transition: "all 0.3s",
-                marginRight: "10px",
-              }}
-            >
-              <Link to="/login">ورود</Link>
-            </Button>
-          ))}
-          {!isLoggedIn && (screens.xs ? (
-            <Button
-              size="small"
-              style={{
-                borderRadius: "8px",
-                transition: "all 0.3s",
-                marginRight: "5px",
-                fontSize: "12px",
-              }}
-            >
-              <Link to="/register">ثبت‌نام</Link>
-            </Button>
-          ) : (
-            <Button
-              size="middle"
-              style={{
-                borderRadius: "8px",
-                transition: "all 0.3s",
-                marginRight: "10px",
-              }}
-            >
-              <Link to="/register">ثبت‌نام</Link>
-            </Button>
-          ))}
+          {!isLoggedIn &&
+            (screens.xs ? (
+              <Button
+                type="primary"
+                size="small"
+                style={{
+                  borderColor: "#1890ff",
+                  borderRadius: "8px",
+                  transition: "all 0.3s",
+                  marginRight: "5px",
+                  fontSize: "12px",
+                }}
+              >
+                <Link to="/login">ورود</Link>
+              </Button>
+            ) : (
+              <Button
+                type="primary"
+                size="middle"
+                style={{
+                  borderColor: "#1890ff",
+                  borderRadius: "8px",
+                  transition: "all 0.3s",
+                  marginRight: "10px",
+                }}
+              >
+                <Link to="/login">ورود</Link>
+              </Button>
+            ))}
+          {!isLoggedIn &&
+            (screens.xs ? (
+              <Button
+                size="small"
+                style={{
+                  borderRadius: "8px",
+                  transition: "all 0.3s",
+                  marginRight: "5px",
+                  fontSize: "12px",
+                }}
+              >
+                <Link to="/register">ثبت‌نام</Link>
+              </Button>
+            ) : (
+              <Button
+                size="middle"
+                style={{
+                  borderRadius: "8px",
+                  transition: "all 0.3s",
+                  marginRight: "10px",
+                }}
+              >
+                <Link to="/register">ثبت‌نام</Link>
+              </Button>
+            ))}
           {screens.xs ? (
             <Button
               type="primary"

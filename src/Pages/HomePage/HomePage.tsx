@@ -9,6 +9,7 @@ import './HomePage.css';
 const HomePage = () => {
   return (
     <div className="root-home-page">
+      {/* home landing : */}
       <HeroCarousel />
       <SpecialtyCards />
       <DoctorSlider />
