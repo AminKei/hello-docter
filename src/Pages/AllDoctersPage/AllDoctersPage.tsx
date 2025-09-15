@@ -4,7 +4,6 @@ import { doctors } from "../../DataApi/DataApi";
 import FilterComponent from "../../Components/Layout/AllDoctersLayout/FilterComponent";
 import DoctorCard from "../../Components/Ui/DoctorCard";
 import SearchAndSort from "../../Components/Layout/AllDoctersLayout/SearchAndSort";
-
 const { Title } = Typography;
 
 interface Doctor {
@@ -48,8 +47,11 @@ const AllDoctersPage = () => {
     }
   }, []);
 
-  const handleFilterChange = (newFilters: FilterState | any | []) => {
-    setFilters(newFilters);
+  const handleFilterChange = (newFilters: Partial<FilterState>) => {
+    setFilters((prevFilters) => ({
+      ...prevFilters,
+      ...newFilters,
+    }));
     setCurrentPage(1); // بازگشت به صفحه اول پس از اعمال فیلتر
   };
 
@@ -72,18 +74,13 @@ const AllDoctersPage = () => {
   };
 
   let filteredDoctors = (doctors || []).filter((doctor) => {
-    const name = doctor?.name || "";
+    const name = doctor?.name?.toLowerCase() || "";
     const specialty = doctor?.specialty || "";
-    // const city = doctor?.city || "";
-    // const gender = doctor?.gender || "";
     const experience = doctor?.experience || 0;
     const available = doctor?.available || false;
-
     return (
-      name.toLowerCase().includes(filters.name.toLowerCase()) &&
+      name.includes((filters.name || "").toLowerCase()) &&
       (filters.specialty === "" || specialty === filters.specialty) &&
-      // (filters.city === "" || city === filters.city) &&
-      // (filters.gender === "" || gender === filters.gender) &&
       (filters.experience === "" ||
         (filters.experience === "0-5" && experience <= 5) ||
         (filters.experience === "5-10" && experience > 5 && experience <= 10) ||

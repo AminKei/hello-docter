@@ -1,7 +1,6 @@
 import React, { FC } from "react";
 import { Row, Col, Input, Select, Button } from "antd";
 import { SearchOutlined, FilterOutlined } from "@ant-design/icons";
-
 const { Option } = Select;
 
 export interface SearchAndSortProps {
