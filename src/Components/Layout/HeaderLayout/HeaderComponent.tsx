@@ -245,6 +245,11 @@ const HeaderComponent: React.FC = () => {
             <Link to={"/"} style={{ backgroundColor: "white" }}>
               سلام دکتر
             </Link>
+            <img
+              src="https://png.pngtree.com/png-vector/20220824/ourmid/pngtree-medical-symbol-nurse-diagnostic-vector-png-image_33423234.png"
+              width={40}
+              alt=""
+            />
           </Title>
           {!screens.md && (
             <Button
