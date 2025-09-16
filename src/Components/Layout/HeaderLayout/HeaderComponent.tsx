@@ -247,8 +247,7 @@ const HeaderComponent: React.FC = () => {
             </Link>
             <img
               src="https://png.pngtree.com/png-vector/20220824/ourmid/pngtree-medical-symbol-nurse-diagnostic-vector-png-image_33423234.png"
-              width={40}
-              alt=""
+              width={screens.md ? "40px" : "0px"}
             />
           </Title>
           {!screens.md && (
